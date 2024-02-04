@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import axios from 'axios';
 
 import { ContentForm } from './Content.interfaces';
+import { createContent } from './Content.service';
 
 const Content: React.FC = () => {
   const [content, setContent] = useState<ContentForm>({
@@ -91,14 +92,8 @@ const Content: React.FC = () => {
 
     if (!errors.title && !errors.description && !errors.link) {
       try {
-        const response = await axios.post('https://evallo-asssignment-api-url', content, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        console.log('API response:', response.data);
-
+        const data = await createContent(content);
+        console.log('API response:', data);
       } catch (error) {
         console.error('Error during API call:', error);
       }
