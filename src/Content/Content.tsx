@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import axios from 'axios';
 
 import { ContentForm } from './Content.interfaces';
 import { createContent } from './Content.service';
