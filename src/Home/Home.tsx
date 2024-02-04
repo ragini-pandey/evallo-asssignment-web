@@ -1,9 +1,71 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { ContentForm } from '../Content/Content.interfaces';
+import { getAllContent } from './Home.service';
+
+const cardStyle = {
+  minWidth: 275,
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  transition: 'transform 0.2s',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    backgroundColor: '#f0f0f0',
+  },
+};
+
+const linkStyle = {
+  marginTop: 'auto',
+  textDecoration: 'none',
+  color: '#1976D2',
+  cursor: 'pointer',
+  '&:hover': {
+    textDecoration: 'underline',
+    color: '#ff5722',
+  },
+};
 
 function Home() {
+  const [allContent, setAllContent] = useState<ContentForm[] | any>([]);
+
+  useEffect(() => {
+    const fetchAllContent = async () => {
+      try {
+        const response = await getAllContent();
+        setAllContent(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchAllContent();
+  }, []);
+
   return (
-    <div>Home</div>
-  )
+    <Grid container spacing={2}>
+      {allContent.map((item: ContentForm, index: number) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          <Card sx={cardStyle}>
+            <CardContent>
+              <Typography variant='h5' component='div'>
+                {item.title}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {item.description}
+              </Typography>
+            </CardContent>
+            <div style={linkStyle}>
+              <a href={item.link} target='_blank' rel='noopener noreferrer'>
+                Open Link
+              </a>
+            </div>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  );
 }
 
-export default Home
+export default Home;
