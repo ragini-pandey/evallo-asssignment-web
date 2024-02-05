@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const contentServiceInstance = axios.create({
-  baseURL: 'https://api.example.com',
+  baseURL: 'http://localhost:8000/api',
   headers: {
     'Content-Type': 'application/json'
   },
